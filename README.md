@@ -1,4 +1,4 @@
-# AI Chat Application Stack Guide
+# GenAI Chat Application Stack on AWS
 
 An interactive React application that provides a comprehensive guide to building AI chat applications primarily on AWS.
 
@@ -12,7 +12,7 @@ An interactive React application that provides a comprehensive guide to building
 
 ## Project Structure
 
-```
+```bash
 src/
 ├── GenAiStack.tsx    # Main component with collapsible sections
 ├── App.tsx          # Root application component
@@ -26,17 +26,20 @@ src/
 ### Getting Started
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd genai-stack
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start development server**
+
    ```bash
    npm run dev
    ```
@@ -85,14 +88,3 @@ The main `GenAiStack` component manages multiple collapsible sections:
 - **Toggle Functions**: Dedicated handlers for expanding/collapsing sections
 - **Conditional Rendering**: Sections only render content when expanded
 - **Accessibility**: Clickable headers with visual indicators (chevron icons)
-
-## Contributing
-
-1. Follow the existing code style and TypeScript conventions
-2. Test UI changes across different screen sizes
-3. Ensure all sections remain functional when collapsed/expanded
-4. Update this README if adding new features
-
-## License
-
-This project is part of a development workspace and follows standard open-source practices.

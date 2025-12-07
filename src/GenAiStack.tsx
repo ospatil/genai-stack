@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
+import { CollapsibleSection, TechnologyOption, GlossaryItem } from './components/SectionComponents';
 
 const GenAiStack = () => {
   const [expandedCategories, setExpandedCategories] = useState({
@@ -350,6 +351,143 @@ const GenAiStack = () => {
     }
   ];
 
+  const glossaryItems = [
+    {
+      title: 'Amazon Bedrock',
+      description: 'AWS\'s fully managed service providing API access to multiple foundation models (Claude, Llama, Titan, etc.) through a single interface. Think of it as the "AWS marketplace for AI models" - you get enterprise features like VPC integration, CloudWatch monitoring, and AWS IAM without managing infrastructure.',
+      alternatives: [
+        'OpenAI API - Direct API to GPT models (faster updates, simpler)',
+        'Anthropic API - Direct Claude access (latest features first)',
+        'Azure OpenAI Service - Microsoft\'s managed OpenAI (similar concept)',
+        'Google Vertex AI - Google\'s equivalent (Gemini, PaLM models)',
+        'Together.ai / Replicate - Multi-model API platforms'
+      ],
+      color: 'border-indigo-200 bg-indigo-50',
+      titleColor: 'text-indigo-900'
+    },
+    {
+      title: 'Bedrock Knowledge Bases',
+      description: 'Fully managed RAG (Retrieval Augmented Generation) service that automatically chunks documents, creates embeddings, stores them in vector databases, and retrieves relevant context for queries. Connects to S3, handles the entire RAG pipeline without code.',
+      alternatives: [
+        'LlamaIndex - Open-source RAG framework (Python/TypeScript)',
+        'LangChain Document Loaders + Vector Stores - DIY RAG pipeline',
+        'Pinecone + custom chunking - Build your own RAG system',
+        'Weaviate with modules - Vector DB with built-in RAG features',
+        'Azure AI Search - Microsoft\'s managed RAG solution'
+      ],
+      color: 'border-teal-200 bg-teal-50',
+      titleColor: 'text-teal-900'
+    },
+    {
+      title: 'Bedrock Agents',
+      description: 'Fully managed service to create AI agents that can reason, use tools, and execute multi-step workflows. You define Action Groups (tools) via OpenAPI schemas backed by Lambda functions, and Bedrock handles orchestration, memory, and execution. No code for agent logic - configuration-based approach.',
+      alternatives: [
+        'LangGraph - Build stateful agents with code (more control)',
+        'AutoGPT / BabyAGI - Open-source autonomous agents',
+        'Semantic Kernel (Microsoft) - .NET agent framework',
+        'OpenAI Assistants API - Managed agents with tools and files',
+        'CrewAI - Multi-agent orchestration framework'
+      ],
+      color: 'border-purple-200 bg-purple-50',
+      titleColor: 'text-purple-900'
+    },
+    {
+      title: 'Bedrock AgentCore',
+      description: 'Infrastructure platform for running AI agents at scale. Unlike Bedrock Agents (configuration-based), AgentCore lets you bring your own agent code (Strands, LangGraph, CrewAI, etc.) and provides managed runtime, memory, authentication, monitoring, security policies, and evaluations. Think "Lambda for agents" - you write the logic, AWS handles infrastructure.',
+      alternatives: [
+        'LangSmith + LangServe - LangChain\'s deployment/monitoring platform',
+        'Modal - Serverless platform for Python (can run agents)',
+        'Replicate - Run ML models and agents serverlessly',
+        'Azure AI Agent Service - Microsoft\'s equivalent (preview)',
+        'DIY: Lambda/ECS + your own monitoring - Self-managed approach'
+      ],
+      color: 'border-red-200 bg-red-50',
+      titleColor: 'text-red-900',
+      badge: 'NEW 2024'
+    },
+    {
+      title: 'Strands Agents',
+      description: 'Open-source Python SDK from AWS for building AI agents using a model-driven approach. Simple decorator pattern (@tool) turns any function into an agent tool. Used in production by AWS services (Amazon Q, AWS Glue). Works with any LLM, supports MCP (Model Context Protocol) for tool discovery. Can deploy anywhere, optimized for AgentCore.',
+      alternatives: [
+        'LangGraph - More complex, graph-based agent workflows (TS/Python)',
+        'CrewAI - Multi-agent systems with role-based design',
+        'AutoGen (Microsoft) - Multi-agent conversation framework',
+        'OpenAI Swarm - Experimental multi-agent orchestration',
+        'Haystack Agents - Agent framework from deepset.ai'
+      ],
+      color: 'border-orange-200 bg-orange-50',
+      titleColor: 'text-orange-900',
+      badge: 'AWS Open Source'
+    },
+    {
+      title: 'S3 Vectors',
+      description: 'Native vector database functionality built directly into S3. Store and query vector embeddings without provisioning separate infrastructure - up to 90% cheaper than traditional vector databases. Sub-second queries, integrates with Bedrock Knowledge Bases. Optimized for cost over ultra-low latency.',
+      alternatives: [
+        'Pinecone - Dedicated vector DB (fastest, most expensive)',
+        'Weaviate - Open-source vector DB with advanced features',
+        'Qdrant - High-performance open-source vector search',
+        'Chroma - Simple embedded vector DB for prototyping',
+        'Milvus / Zilliz - Scalable open-source vector database',
+        'pgvector (Postgres) - Vector extension for existing Postgres'
+      ],
+      color: 'border-green-200 bg-green-50',
+      titleColor: 'text-green-900',
+      badge: 'NEW 2024'
+    },
+    {
+      title: 'Lambda vs ECS (for APIs)',
+      description: 'Lambda: Serverless functions, pay per request, auto-scaling, 15min timeout, cold starts. ECS (Fargate): Containerized apps, always warm, no timeouts, pay for uptime. Both can run your Hono.js API - Lambda for sporadic traffic, ECS for consistent traffic.',
+      alternatives: [
+        'Google Cloud Run - Serverless containers (similar to Fargate)',
+        'Azure Functions - Serverless equivalent to Lambda',
+        'Vercel Edge Functions - Deploy APIs with frontend',
+        'Cloudflare Workers - Edge compute (ultra-low latency)',
+        'Railway / Render / Fly.io - Simple container hosting'
+      ],
+      color: 'border-blue-200 bg-blue-50',
+      titleColor: 'text-blue-900'
+    },
+    {
+      title: 'S3 + CloudFront (for SPAs)',
+      description: 'S3: Object storage for hosting static files (your built React/Svelte app). CloudFront: Global CDN that caches and serves your S3 content from edge locations worldwide. Together they provide fast, scalable, cheap static site hosting.',
+      alternatives: [
+        'Vercel - Zero-config deployment for SPAs (easiest)',
+        'Netlify - Similar to Vercel, great DX',
+        'Cloudflare Pages - Free tier, very fast edge network',
+        'GitHub Pages - Free, simple, limited features',
+        'Azure Static Web Apps - Microsoft\'s equivalent'
+      ],
+      color: 'border-gray-200 bg-gray-50',
+      titleColor: 'text-gray-900'
+    },
+    {
+      title: 'Model Context Protocol (MCP)',
+      description: 'Open standard from Anthropic that enables AI applications to connect to external data sources and tools through a standardized protocol. Think "USB-C for AI" - instead of building custom connectors for each data source, you build MCP servers that any MCP-compatible client can use. Provides tools (functions), resources (data), and prompts (templates) to LLMs. Built on JSON-RPC over stdio/HTTP.',
+      alternatives: [
+        'OpenAI Function Calling - Vendor-specific tool use',
+        'LangChain Tools - Framework-specific tool abstraction',
+        'ChatGPT Plugins - OpenAI\'s earlier attempt (deprecated)',
+        'OpenAPI/Swagger - Similar standardization for REST APIs'
+      ],
+      color: 'border-cyan-200 bg-cyan-50',
+      titleColor: 'text-cyan-900',
+      badge: 'Protocol'
+    },
+    {
+      title: 'Agent2Agent (A2A) Protocol',
+      description: 'Open protocol for secure, interoperable AI agent communication and collaboration. Enables agents from different providers and platforms to work together seamlessly, share context, and coordinate complex multi-agent workflows. Built on cryptographic security primitives and standardized message formats.',
+      alternatives: [
+        'Custom API integrations - Point-to-point agent communication',
+        'LangChain LCEL - Framework-specific agent orchestration',
+        'CrewAI multi-agent - Python-specific agent collaboration',
+        'AutoGen group chat - Microsoft\'s agent communication framework'
+      ],
+      color: 'border-fuchsia-200 bg-fuchsia-50',
+      titleColor: 'text-fuchsia-900',
+      badge: 'Protocol - NEW 2025'
+    }
+  ];
+
   return (
     <div className="w-full max-w-6xl mx-auto p-6 bg-gray-50">
       <div className="mb-8">
@@ -362,585 +500,259 @@ const GenAiStack = () => {
       </div>
 
       {/* Technology Categorization */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-        <div
-          className="p-6 cursor-pointer flex items-center justify-between hover:bg-gray-50"
-          onClick={toggleCategorization}
-        >
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-800">
-              Technology Categorization
-            </h2>
-            <p className="text-gray-600 mt-1">
-              Complete breakdown of technology choices by category
+      <CollapsibleSection
+        title="Technology Categorization"
+        description="Complete breakdown of technology choices by category"
+        isExpanded={expandedCategorization}
+        onToggle={toggleCategorization}
+      >
+        <div className="px-6 pb-6">
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+            <p className="text-sm text-gray-700">
+              <strong>How to read this:</strong> Categories are ordered from frontend to backend.
+              Each category shows available options with pros/cons and when to use them.
             </p>
           </div>
-          {expandedCategorization ? (
-            <ChevronDown className="w-6 h-6 text-gray-600" />
-          ) : (
-            <ChevronRight className="w-6 h-6 text-gray-600" />
-          )}
-        </div>
 
-        {expandedCategorization && (
-          <div className="px-6 pb-6">
-            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-              <p className="text-sm text-gray-700">
-                <strong>How to read this:</strong> Categories are ordered from frontend to backend.
-                Each category shows available options with pros/cons and when to use them.
-              </p>
-            </div>
-
-            {/* Categories */}
-            <div className="space-y-4">
-              {categories.map((category) => (
+          {/* Categories */}
+          <div className="space-y-4">
+            {categories.map((category) => (
+              <div
+                key={category.id}
+                className={`border-2 rounded-lg overflow-hidden ${category.color}`}
+              >
                 <div
-                  key={category.id}
-                  className={`border-2 rounded-lg overflow-hidden ${category.color}`}
+                  className="p-4 cursor-pointer flex items-center justify-between hover:opacity-80"
+                  onClick={() => toggleCategory(category.id as CategoryKey)}
                 >
-                  <div
-                    className="p-4 cursor-pointer flex items-center justify-between hover:opacity-80"
-                    onClick={() => toggleCategory(category.id as CategoryKey)}
-                  >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <h2 className="text-xl font-bold text-gray-800">
-                          {category.name}
-                        </h2>
-                        {category.required === false && (
-                          <span className="px-2 py-1 bg-yellow-200 text-yellow-800 text-xs rounded-full font-semibold">
-                            OPTIONAL
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {category.description}
-                      </p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-xl font-bold text-gray-800">
+                        {category.name}
+                      </h2>
+                      {category.required === false && (
+                        <span className="px-2 py-1 bg-yellow-200 text-yellow-800 text-xs rounded-full font-semibold">
+                          OPTIONAL
+                        </span>
+                      )}
                     </div>
-                    {expandedCategories[category.id as CategoryKey] ? (
-                      <ChevronDown className="w-6 h-6 text-gray-600" />
-                    ) : (
-                      <ChevronRight className="w-6 h-6 text-gray-600" />
-                    )}
+                    <p className="text-sm text-gray-600 mt-1">
+                      {category.description}
+                    </p>
                   </div>
-
-                  {expandedCategories[category.id as CategoryKey] && (
-                    <div className="bg-white p-4 space-y-3">
-                      {category.options.map((option, idx) => (
-                        <div
-                          key={idx}
-                          className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                        >
-                          <h3 className="font-bold text-lg text-gray-800 mb-2">
-                            {option.name}
-                          </h3>
-
-                          <div className="grid md:grid-cols-2 gap-3 mb-2">
-                            <div>
-                              <p className="text-sm font-semibold text-green-700 mb-1">
-                                ✓ Pros:
-                              </p>
-                              <ul className="text-sm text-gray-600 space-y-1">
-                                {option.pros.map((pro, i) => (
-                                  <li key={i}>• {pro}</li>
-                                ))}
-                              </ul>
-                            </div>
-
-                            <div>
-                              <p className="text-sm font-semibold text-red-700 mb-1">
-                                ✗ Cons:
-                              </p>
-                              <ul className="text-sm text-gray-600 space-y-1">
-                                {option.cons.map((con, i) => (
-                                  <li key={i}>• {con}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          </div>
-
-                          <div className="bg-blue-50 rounded p-2 mt-2">
-                            <p className="text-sm text-gray-700">
-                              <strong className="text-blue-700">When to use:</strong>{' '}
-                              {option.when}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                  {expandedCategories[category.id as CategoryKey] ? (
+                    <ChevronDown className="w-6 h-6 text-gray-600" />
+                  ) : (
+                    <ChevronRight className="w-6 h-6 text-gray-600" />
                   )}
                 </div>
-              ))}
-            </div>
+
+                {expandedCategories[category.id as CategoryKey] && (
+                  <div className="bg-white p-4 space-y-3">
+                    {category.options.map((option, idx) => (
+                      <TechnologyOption
+                        key={idx}
+                        name={option.name}
+                        pros={option.pros}
+                        cons={option.cons}
+                        when={option.when}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      </CollapsibleSection>
 
       {/* Common Architecture Patterns */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-        <div
-          className="p-6 cursor-pointer flex items-center justify-between hover:bg-gray-50"
-          onClick={togglePatterns}
-        >
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-800">
-              Common Architecture Patterns
-            </h2>
-            <p className="text-gray-600 mt-1">
-              Pre-configured stacks for different use cases
+      <CollapsibleSection
+        title="Common Architecture Patterns"
+        description="Pre-configured stacks for different use cases"
+        isExpanded={expandedPatterns}
+        onToggle={togglePatterns}
+      >
+        <div className="px-6 pb-6">
+          <div className="grid md:grid-cols-3 gap-4">
+            {architecturePatterns.map((pattern, idx) => (
+              <div
+                key={idx}
+                className="border-2 border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-bold text-lg text-gray-800">
+                    {pattern.name}
+                  </h3>
+                  <span
+                    className={`px-2 py-1 text-xs rounded-full font-semibold ${
+                      pattern.complexity === 'Low'
+                        ? 'bg-green-200 text-green-800'
+                        : pattern.complexity === 'Medium'
+                        ? 'bg-yellow-200 text-yellow-800'
+                        : 'bg-red-200 text-red-800'
+                    }`}
+                  >
+                    {pattern.complexity}
+                  </span>
+                </div>
+
+                <div className="mb-3">
+                  <p className="text-sm font-semibold text-gray-700 mb-2">
+                    Stack (Frontend → Backend):
+                  </p>
+                  <ol className="text-sm text-gray-600 space-y-1">
+                    {pattern.stack.map((layer, i) => (
+                      <li key={i} className="flex items-start">
+                        <span className="font-mono text-blue-600 mr-2">
+                          {i + 1}.
+                        </span>
+                        <span>{layer}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+
+                <div className="bg-gray-50 rounded p-2">
+                  <p className="text-sm text-gray-700">
+                    <strong>Best for:</strong> {pattern.when}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 bg-green-50 border-l-4 border-green-500 p-4">
+            <p className="text-sm font-semibold text-green-800 mb-2">
+              💡 Recommended Starting Point:
+            </p>
+            <p className="text-sm text-gray-700">
+              For "not very complex chat agent with RAG" → Start with{' '}
+              <strong>Simple RAG pattern</strong>. Add AgentCore later only if you
+              need multi-step reasoning with tool selection.
             </p>
           </div>
-          {expandedPatterns ? (
-            <ChevronDown className="w-6 h-6 text-gray-600" />
-          ) : (
-            <ChevronRight className="w-6 h-6 text-gray-600" />
-          )}
         </div>
-
-        {expandedPatterns && (
-          <div className="px-6 pb-6">
-            <div className="grid md:grid-cols-3 gap-4">
-              {architecturePatterns.map((pattern, idx) => (
-                <div
-                  key={idx}
-                  className="border-2 border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-bold text-lg text-gray-800">
-                      {pattern.name}
-                    </h3>
-                    <span
-                      className={`px-2 py-1 text-xs rounded-full font-semibold ${
-                        pattern.complexity === 'Low'
-                          ? 'bg-green-200 text-green-800'
-                          : pattern.complexity === 'Medium'
-                          ? 'bg-yellow-200 text-yellow-800'
-                          : 'bg-red-200 text-red-800'
-                      }`}
-                    >
-                      {pattern.complexity}
-                    </span>
-                  </div>
-
-                  <div className="mb-3">
-                    <p className="text-sm font-semibold text-gray-700 mb-2">
-                      Stack (Frontend → Backend):
-                    </p>
-                    <ol className="text-sm text-gray-600 space-y-1">
-                      {pattern.stack.map((layer, i) => (
-                        <li key={i} className="flex items-start">
-                          <span className="font-mono text-blue-600 mr-2">
-                            {i + 1}.
-                          </span>
-                          <span>{layer}</span>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-
-                  <div className="bg-gray-50 rounded p-2">
-                    <p className="text-sm text-gray-700">
-                      <strong>Best for:</strong> {pattern.when}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 bg-green-50 border-l-4 border-green-500 p-4">
-              <p className="text-sm font-semibold text-green-800 mb-2">
-                💡 Recommended Starting Point:
-              </p>
-              <p className="text-sm text-gray-700">
-                For "not very complex chat agent with RAG" → Start with{' '}
-                <strong>Simple RAG pattern</strong>. Add AgentCore later only if you
-                need multi-step reasoning with tool selection.
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
+      </CollapsibleSection>
 
       {/* AWS Technology Glossary */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-        <div
-          className="p-6 cursor-pointer flex items-center justify-between hover:bg-gray-50"
-          onClick={toggleGlossary}
-        >
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-800">
-              AWS AI Technology Glossary
-            </h2>
-            <p className="text-gray-600 mt-1">
-              Demystifying AWS's AI services and their alternatives
+      <CollapsibleSection
+        title="AWS AI Technology Glossary"
+        description="Demystifying AWS's AI services and their alternatives"
+        isExpanded={expandedGlossary}
+        onToggle={toggleGlossary}
+      >
+        <div className="px-6 pb-6">
+          <div className="space-y-6">
+            {glossaryItems.map((item, idx) => (
+              <GlossaryItem
+                key={idx}
+                title={item.title}
+                description={item.description}
+                alternatives={item.alternatives}
+                badge={item.badge}
+                color={item.color}
+                titleColor={item.titleColor}
+              />
+            ))}
+          </div>
+
+          <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-500 p-4">
+            <p className="text-sm font-semibold text-yellow-800 mb-2">
+              📝 Quick Decision Guide:
             </p>
+            <ul className="text-sm text-gray-700 space-y-1">
+              <li>• <strong>Just need AI models?</strong> → Bedrock (or direct OpenAI/Anthropic API)</li>
+              <li>• <strong>Need RAG?</strong> → Bedrock Knowledge Bases (or LlamaIndex)</li>
+              <li>• <strong>Need agents with config?</strong> → Bedrock Agents</li>
+              <li>• <strong>Need agents with code control?</strong> → AgentCore + Strands (or LangGraph)</li>
+              <li>• <strong>Need vector storage?</strong> → S3 Vectors (or Pinecone for high QPS)</li>
+              <li>• <strong>Want AWS-native everything?</strong> → Use all AWS services above</li>
+              <li>• <strong>Want provider-agnostic?</strong> → Use open-source alternatives</li>
+            </ul>
           </div>
-          {expandedGlossary ? (
-            <ChevronDown className="w-6 h-6 text-gray-600" />
-          ) : (
-            <ChevronRight className="w-6 h-6 text-gray-600" />
-          )}
-        </div>
 
-        {expandedGlossary && (
-          <div className="px-6 pb-6">
-            <div className="space-y-6">
-              {/* Amazon Bedrock */}
-              <div className="border-2 border-indigo-200 rounded-lg p-4 bg-indigo-50">
-                <h3 className="font-bold text-xl text-indigo-900 mb-2">
-                  Amazon Bedrock
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  AWS's fully managed service providing API access to multiple foundation models (Claude, Llama, Titan, etc.) through a single interface. Think of it as the "AWS marketplace for AI models" - you get enterprise features like VPC integration, CloudWatch monitoring, and AWS IAM without managing infrastructure.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Competitive Alternatives:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>OpenAI API</strong> - Direct API to GPT models (faster updates, simpler)</li>
-                    <li>• <strong>Anthropic API</strong> - Direct Claude access (latest features first)</li>
-                    <li>• <strong>Azure OpenAI Service</strong> - Microsoft's managed OpenAI (similar concept)</li>
-                    <li>• <strong>Google Vertex AI</strong> - Google's equivalent (Gemini, PaLM models)</li>
-                    <li>• <strong>Together.ai / Replicate</strong> - Multi-model API platforms</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Bedrock Knowledge Bases */}
-              <div className="border-2 border-teal-200 rounded-lg p-4 bg-teal-50">
-                <h3 className="font-bold text-xl text-teal-900 mb-2">
-                  Bedrock Knowledge Bases
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  Fully managed RAG (Retrieval Augmented Generation) service that automatically chunks documents, creates embeddings, stores them in vector databases, and retrieves relevant context for queries. Connects to S3, handles the entire RAG pipeline without code.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Competitive Alternatives:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>LlamaIndex</strong> - Open-source RAG framework (Python/TypeScript)</li>
-                    <li>• <strong>LangChain Document Loaders + Vector Stores</strong> - DIY RAG pipeline</li>
-                    <li>• <strong>Pinecone + custom chunking</strong> - Build your own RAG system</li>
-                    <li>• <strong>Weaviate with modules</strong> - Vector DB with built-in RAG features</li>
-                    <li>• <strong>Azure AI Search</strong> - Microsoft's managed RAG solution</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Bedrock Agents */}
-              <div className="border-2 border-purple-200 rounded-lg p-4 bg-purple-50">
-                <h3 className="font-bold text-xl text-purple-900 mb-2">
-                  Bedrock Agents
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  Fully managed service to create AI agents that can reason, use tools, and execute multi-step workflows. You define Action Groups (tools) via OpenAPI schemas backed by Lambda functions, and Bedrock handles orchestration, memory, and execution. No code for agent logic - configuration-based approach.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Competitive Alternatives:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>LangGraph</strong> - Build stateful agents with code (more control)</li>
-                    <li>• <strong>AutoGPT / BabyAGI</strong> - Open-source autonomous agents</li>
-                    <li>• <strong>Semantic Kernel (Microsoft)</strong> - .NET agent framework</li>
-                    <li>• <strong>OpenAI Assistants API</strong> - Managed agents with tools and files</li>
-                    <li>• <strong>CrewAI</strong> - Multi-agent orchestration framework</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Bedrock AgentCore */}
-              <div className="border-2 border-red-200 rounded-lg p-4 bg-red-50">
-                <h3 className="font-bold text-xl text-red-900 mb-2">
-                  Bedrock AgentCore <span className="text-sm bg-red-200 px-2 py-1 rounded">NEW 2024</span>
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  Infrastructure platform for running AI agents at scale. Unlike Bedrock Agents (configuration-based), AgentCore lets you bring your own agent code (Strands, LangGraph, CrewAI, etc.) and provides managed runtime, memory, authentication, monitoring, security policies, and evaluations. Think "Lambda for agents" - you write the logic, AWS handles infrastructure.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Competitive Alternatives:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>LangSmith + LangServe</strong> - LangChain's deployment/monitoring platform</li>
-                    <li>• <strong>Modal</strong> - Serverless platform for Python (can run agents)</li>
-                    <li>• <strong>Replicate</strong> - Run ML models and agents serverlessly</li>
-                    <li>• <strong>Azure AI Agent Service</strong> - Microsoft's equivalent (preview)</li>
-                    <li>• <strong>DIY: Lambda/ECS + your own monitoring</strong> - Self-managed approach</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Strands Agents */}
-              <div className="border-2 border-orange-200 rounded-lg p-4 bg-orange-50">
-                <h3 className="font-bold text-xl text-orange-900 mb-2">
-                  Strands Agents <span className="text-sm bg-orange-200 px-2 py-1 rounded">AWS Open Source</span>
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  Open-source Python SDK from AWS for building AI agents using a model-driven approach. Simple decorator pattern (@tool) turns any function into an agent tool. Used in production by AWS services (Amazon Q, AWS Glue). Works with any LLM, supports MCP (Model Context Protocol) for tool discovery. Can deploy anywhere, optimized for AgentCore.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Competitive Alternatives:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>LangGraph</strong> - More complex, graph-based agent workflows (TS/Python)</li>
-                    <li>• <strong>CrewAI</strong> - Multi-agent systems with role-based design</li>
-                    <li>• <strong>AutoGen (Microsoft)</strong> - Multi-agent conversation framework</li>
-                    <li>• <strong>OpenAI Swarm</strong> - Experimental multi-agent orchestration</li>
-                    <li>• <strong>Haystack Agents</strong> - Agent framework from deepset.ai</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* S3 Vectors */}
-              <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
-                <h3 className="font-bold text-xl text-green-900 mb-2">
-                  S3 Vectors <span className="text-sm bg-green-200 px-2 py-1 rounded">NEW 2024</span>
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  Native vector database functionality built directly into S3. Store and query vector embeddings without provisioning separate infrastructure - up to 90% cheaper than traditional vector databases. Sub-second queries, integrates with Bedrock Knowledge Bases. Optimized for cost over ultra-low latency.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Competitive Alternatives:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>Pinecone</strong> - Dedicated vector DB (fastest, most expensive)</li>
-                    <li>• <strong>Weaviate</strong> - Open-source vector DB with advanced features</li>
-                    <li>• <strong>Qdrant</strong> - High-performance open-source vector search</li>
-                    <li>• <strong>Chroma</strong> - Simple embedded vector DB for prototyping</li>
-                    <li>• <strong>Milvus / Zilliz</strong> - Scalable open-source vector database</li>
-                    <li>• <strong>pgvector (Postgres)</strong> - Vector extension for existing Postgres</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* AWS Lambda vs ECS */}
-              <div className="border-2 border-blue-200 rounded-lg p-4 bg-blue-50">
-                <h3 className="font-bold text-xl text-blue-900 mb-2">
-                  Lambda vs ECS (for APIs)
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  <strong>Lambda:</strong> Serverless functions, pay per request, auto-scaling, 15min timeout, cold starts. <strong>ECS (Fargate):</strong> Containerized apps, always warm, no timeouts, pay for uptime. Both can run your Hono.js API - Lambda for sporadic traffic, ECS for consistent traffic.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Competitive Alternatives:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>Google Cloud Run</strong> - Serverless containers (similar to Fargate)</li>
-                    <li>• <strong>Azure Functions</strong> - Serverless equivalent to Lambda</li>
-                    <li>• <strong>Vercel Edge Functions</strong> - Deploy APIs with frontend</li>
-                    <li>• <strong>Cloudflare Workers</strong> - Edge compute (ultra-low latency)</li>
-                    <li>• <strong>Railway / Render / Fly.io</strong> - Simple container hosting</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* CloudFront + S3 */}
-              <div className="border-2 border-gray-200 rounded-lg p-4 bg-gray-50">
-                <h3 className="font-bold text-xl text-gray-900 mb-2">
-                  S3 + CloudFront (for SPAs)
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  <strong>S3:</strong> Object storage for hosting static files (your built React/Svelte app). <strong>CloudFront:</strong> Global CDN that caches and serves your S3 content from edge locations worldwide. Together they provide fast, scalable, cheap static site hosting.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Competitive Alternatives:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>Vercel</strong> - Zero-config deployment for SPAs (easiest)</li>
-                    <li>• <strong>Netlify</strong> - Similar to Vercel, great DX</li>
-                    <li>• <strong>Cloudflare Pages</strong> - Free tier, very fast edge network</li>
-                    <li>• <strong>GitHub Pages</strong> - Free, simple, limited features</li>
-                    <li>• <strong>Azure Static Web Apps</strong> - Microsoft's equivalent</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Model Context Protocol */}
-              <div className="border-2 border-cyan-200 rounded-lg p-4 bg-cyan-50">
-                <h3 className="font-bold text-xl text-cyan-900 mb-2">
-                  Model Context Protocol (MCP) <span className="text-sm bg-cyan-200 px-2 py-1 rounded">Protocol</span>
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  Open standard from Anthropic that enables AI applications to connect to external data sources and tools through a standardized protocol. Think "USB-C for AI" - instead of building custom connectors for each data source, you build MCP servers that any MCP-compatible client can use. Provides tools (functions), resources (data), and prompts (templates) to LLMs. Built on JSON-RPC over stdio/HTTP.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    What MCP Does:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1 mb-3">
-                    <li>• <strong>Agent → Tool</strong> communication (give agents access to databases, APIs, files)</li>
-                    <li>• Pre-built servers: Google Drive, Slack, GitHub, Postgres, Puppeteer</li>
-                    <li>• SDKs: Python, TypeScript, Java, C#, Kotlin</li>
-                    <li>• Adopted by Claude, ChatGPT, VS Code, Zed, Replit, Sourcegraph</li>
-                  </ul>
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Similar Concepts:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>OpenAI Function Calling</strong> - Vendor-specific tool use</li>
-                    <li>• <strong>LangChain Tools</strong> - Framework-specific tool abstraction</li>
-                    <li>• <strong>ChatGPT Plugins</strong> - OpenAI's earlier attempt (deprecated)</li>
-                    <li>• <strong>OpenAPI/Swagger</strong> - Similar standardization for REST APIs</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Agent2Agent Protocol */}
-              <div className="border-2 border-fuchsia-200 rounded-lg p-4 bg-fuchsia-50">
-                <h3 className="font-bold text-xl text-fuchsia-900 mb-2">
-                  Agent2Agent (A2A) Protocol <span className="text-sm bg-fuchsia-200 px-2 py-1 rounded">Protocol - NEW 2025</span>
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  Open standard from Google (now at Linux Foundation) that enables AI agents to communicate and collaborate with other AI agents across different frameworks and vendors. While MCP connects agents to tools/data, A2A connects agents to agents. Agents can discover each other's capabilities, delegate tasks, exchange information, and coordinate without sharing internal state or memory. Built on HTTP, SSE, JSON-RPC.
-                </p>
-                <div className="bg-white rounded p-3">
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    What A2A Does:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1 mb-3">
-                    <li>• <strong>Agent → Agent</strong> communication (multi-agent collaboration)</li>
-                    <li>• Agent Cards: agents advertise capabilities at well-known URLs</li>
-                    <li>• Task delegation: agents can delegate subtasks to specialized agents</li>
-                    <li>• 100+ partners: Google, Microsoft, AWS, Salesforce, ServiceNow, SAP, Atlassian</li>
-                    <li>• Works with any framework: LangGraph, CrewAI, Strands, Semantic Kernel, ADK</li>
-                  </ul>
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Key Principle:
-                  </p>
-                  <p className="text-sm text-gray-600 mb-2">
-                    <strong>MCP for tools, A2A for agents.</strong> Use MCP to give one agent capabilities. Use A2A when agents need to work together. Both protocols are complementary - agentic apps need both.
-                  </p>
-                  <p className="text-sm font-semibold text-gray-700 mb-2">
-                    Similar Concepts:
-                  </p>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• <strong>Multi-agent frameworks</strong> (CrewAI, AutoGen) - but proprietary</li>
-                    <li>• <strong>Microservices communication</strong> - similar pattern for services</li>
-                    <li>• <strong>RPC protocols</strong> - A2A is RPC specifically for agents</li>
-                    <li>• Nothing else quite like it - A2A is pioneering agent interoperability</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-500 p-4">
-              <p className="text-sm font-semibold text-yellow-800 mb-2">
-                📝 Quick Decision Guide:
-              </p>
-              <ul className="text-sm text-gray-700 space-y-1">
-                <li>• <strong>Just need AI models?</strong> → Bedrock (or direct OpenAI/Anthropic API)</li>
-                <li>• <strong>Need RAG?</strong> → Bedrock Knowledge Bases (or LlamaIndex)</li>
-                <li>• <strong>Need agents with config?</strong> → Bedrock Agents</li>
-                <li>• <strong>Need agents with code control?</strong> → AgentCore + Strands (or LangGraph)</li>
-                <li>• <strong>Need vector storage?</strong> → S3 Vectors (or Pinecone for high QPS)</li>
-                <li>• <strong>Want AWS-native everything?</strong> → Use all AWS services above</li>
-                <li>• <strong>Want provider-agnostic?</strong> → Use open-source alternatives</li>
+          <div className="mt-6 bg-cyan-50 border-l-4 border-cyan-500 p-4">
+            <p className="text-sm font-semibold text-cyan-800 mb-2">
+              🔌 Understanding MCP vs A2A:
+            </p>
+            <div className="text-sm text-gray-700 space-y-2">
+              <p><strong>MCP (Model Context Protocol):</strong> Agent-to-Tool communication</p>
+              <ul className="ml-4 space-y-1">
+                <li>• "Give my agent access to Google Drive, Slack, databases"</li>
+                <li>• One agent, many tools</li>
+                <li>• Like plugins for your agent</li>
               </ul>
-            </div>
-
-            <div className="mt-6 bg-cyan-50 border-l-4 border-cyan-500 p-4">
-              <p className="text-sm font-semibold text-cyan-800 mb-2">
-                🔌 Understanding MCP vs A2A:
-              </p>
-              <div className="text-sm text-gray-700 space-y-2">
-                <p><strong>MCP (Model Context Protocol):</strong> Agent-to-Tool communication</p>
-                <ul className="ml-4 space-y-1">
-                  <li>• "Give my agent access to Google Drive, Slack, databases"</li>
-                  <li>• One agent, many tools</li>
-                  <li>• Like plugins for your agent</li>
-                </ul>
-                <p className="mt-2"><strong>A2A (Agent2Agent Protocol):</strong> Agent-to-Agent communication</p>
-                <ul className="ml-4 space-y-1">
-                  <li>• "Let my HR agent talk to recruiting agent and background check agent"</li>
-                  <li>• Many agents, coordinated workflow</li>
-                  <li>• Like microservices for agents</li>
-                </ul>
-                <p className="mt-2"><strong>Example:</strong> HR agent uses <em>MCP</em> to access ATS database, then uses <em>A2A</em> to delegate candidate screening to recruiting agent, which itself uses <em>MCP</em> to access LinkedIn data.</p>
-              </div>
+              <p className="mt-2"><strong>A2A (Agent2Agent Protocol):</strong> Agent-to-Agent communication</p>
+              <ul className="ml-4 space-y-1">
+                <li>• "Let my HR agent talk to recruiting agent and background check agent"</li>
+                <li>• Many agents, coordinated workflow</li>
+                <li>• Like microservices for agents</li>
+              </ul>
+              <p className="mt-2"><strong>Example:</strong> HR agent uses <em>MCP</em> to access ATS database, then uses <em>A2A</em> to delegate candidate screening to recruiting agent, which itself uses <em>MCP</em> to access LinkedIn data.</p>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      </CollapsibleSection>
 
       {/* Key Relationships */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-        <div
-          className="p-6 cursor-pointer flex items-center justify-between hover:bg-gray-50"
-          onClick={toggleRelationships}
-        >
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-800">
-              Key Relationships
-            </h2>
-          </div>
-          {expandedRelationships ? (
-            <ChevronDown className="w-6 h-6 text-gray-600" />
-          ) : (
-            <ChevronRight className="w-6 h-6 text-gray-600" />
-          )}
-        </div>
+      <CollapsibleSection
+        title="Key Relationships"
+        isExpanded={expandedRelationships}
+        onToggle={toggleRelationships}
+      >
+        <div className="px-6 pb-6">
+          <div className="space-y-4">
+            <div className="border-l-4 border-purple-500 pl-4">
+              <h3 className="font-bold text-gray-800 mb-1">
+                UI Components vs Streaming Logic
+              </h3>
+              <p className="text-sm text-gray-600">
+                <strong>UI Components</strong> (Cloudscape, assistant-ui) = How messages <em>look</em>
+                <br />
+                <strong>AI SDK UI</strong> (useChat) = How messages <em>behave</em> (streaming, state)
+                <br />
+                → <strong>Use BOTH together</strong>
+              </p>
+            </div>
 
-        {expandedRelationships && (
-          <div className="px-6 pb-6">
-            <div className="space-y-4">
-              <div className="border-l-4 border-purple-500 pl-4">
-                <h3 className="font-bold text-gray-800 mb-1">
-                  UI Components vs Streaming Logic
-                </h3>
-                <p className="text-sm text-gray-600">
-                  <strong>UI Components</strong> (Cloudscape, assistant-ui) = How messages <em>look</em>
-                  <br />
-                  <strong>AI SDK UI</strong> (useChat) = How messages <em>behave</em> (streaming, state)
-                  <br />
-                  → <strong>Use BOTH together</strong>
-                </p>
-              </div>
+            <div className="border-l-4 border-green-500 pl-4">
+              <h3 className="font-bold text-gray-800 mb-1">
+                When Do You Need Agents?
+              </h3>
+              <p className="text-sm text-gray-600">
+                <strong>NO agents needed:</strong> Simple Q&A, single tool (just RAG)
+                <br />
+                <strong>YES agents needed:</strong> Multi-step reasoning, agent decides which tools to use
+              </p>
+            </div>
 
-              <div className="border-l-4 border-green-500 pl-4">
-                <h3 className="font-bold text-gray-800 mb-1">
-                  When Do You Need Agents?
-                </h3>
-                <p className="text-sm text-gray-600">
-                  <strong>NO agents needed:</strong> Simple Q&A, single tool (just RAG)
-                  <br />
-                  <strong>YES agents needed:</strong> Multi-step reasoning, agent decides which tools to use
-                </p>
-              </div>
+            <div className="border-l-4 border-blue-500 pl-4">
+              <h3 className="font-bold text-gray-800 mb-1">
+                AgentCore = Infrastructure for Agents
+              </h3>
+              <p className="text-sm text-gray-600">
+                AgentCore provides: Runtime, Memory, Auth, Monitoring, Security, Evaluations
+                <br />
+                Your agent code (Strands/LangGraph) runs ON AgentCore
+                <br />
+                → Think: Lambda is to functions as AgentCore is to agents
+              </p>
+            </div>
 
-              <div className="border-l-4 border-blue-500 pl-4">
-                <h3 className="font-bold text-gray-800 mb-1">
-                  AgentCore = Infrastructure for Agents
-                </h3>
-                <p className="text-sm text-gray-600">
-                  AgentCore provides: Runtime, Memory, Auth, Monitoring, Security, Evaluations
-                  <br />
-                  Your agent code (Strands/LangGraph) runs ON AgentCore
-                  <br />
-                  → Think: Lambda is to functions as AgentCore is to agents
-                </p>
-              </div>
-
-              <div className="border-l-4 border-orange-500 pl-4">
-                <h3 className="font-bold text-gray-800 mb-1">
-                  LangChain vs Direct Bedrock
-                </h3>
-                <p className="text-sm text-gray-600">
-                  <strong>Use LangChain if:</strong> Custom RAG logic, complex chains, provider flexibility
-                  <br />
-                  <strong>Use Direct Bedrock if:</strong> Simple RAG, Bedrock Knowledge Bases handle it
-                </p>
-              </div>
+            <div className="border-l-4 border-orange-500 pl-4">
+              <h3 className="font-bold text-gray-800 mb-1">
+                LangChain vs Direct Bedrock
+              </h3>
+              <p className="text-sm text-gray-600">
+                <strong>Use LangChain if:</strong> Custom RAG logic, complex chains, provider flexibility
+                <br />
+                <strong>Use Direct Bedrock if:</strong> Simple RAG, Bedrock Knowledge Bases handle it
+              </p>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      </CollapsibleSection>
     </div>
   );
 };

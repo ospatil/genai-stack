@@ -1,73 +1,98 @@
-# React + TypeScript + Vite
+# AI Chat Application Stack Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive React application that provides a comprehensive guide to building AI chat applications primarily on AWS.
 
-Currently, two official plugins are available:
+## Technology Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: React 19 with TypeScript
+- **Build Tool**: Vite for fast development and HMR
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React for consistent iconography
+- **Linting**: ESLint with React-specific rules
 
-## React Compiler
+## Project Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── GenAiStack.tsx    # Main component with collapsible sections
+├── App.tsx          # Root application component
+├── main.tsx         # Application entry point
+├── index.css        # Global styles
+└── assets/          # Static assets
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Developer Workflow
+
+### Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd genai-stack
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in browser**
+   - Navigate to `http://localhost:5173`
+
+### Development Commands
+
+- `npm run dev` - Start development server with HMR
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+### Code Quality
+
+The project uses ESLint with React-specific rules. For production applications, consider enabling type-aware lint rules by updating `eslint.config.js`:
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
+// Add to eslint.config.js
+extends: [
+  tseslint.configs.recommendedTypeChecked,
+  // or tseslint.configs.strictTypeChecked
+],
+languageOptions: {
+  parserOptions: {
+    project: ['./tsconfig.node.json', './tsconfig.app.json'],
+    tsconfigRootDir: import.meta.dirname,
   },
-])
+}
 ```
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+The built files will be in the `dist/` directory, ready for deployment.
+
+## Component Architecture
+
+The main `GenAiStack` component manages multiple collapsible sections:
+
+- **State Management**: Individual `useState` hooks for each section's expanded state
+- **Toggle Functions**: Dedicated handlers for expanding/collapsing sections
+- **Conditional Rendering**: Sections only render content when expanded
+- **Accessibility**: Clickable headers with visual indicators (chevron icons)
+
+## Contributing
+
+1. Follow the existing code style and TypeScript conventions
+2. Test UI changes across different screen sizes
+3. Ensure all sections remain functional when collapsed/expanded
+4. Update this README if adding new features
+
+## License
+
+This project is part of a development workspace and follows standard open-source practices.

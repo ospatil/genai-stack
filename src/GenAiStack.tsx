@@ -3,15 +3,15 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 
 const GenAiStack = () => {
   const [expandedCategories, setExpandedCategories] = useState({
-    frontend: true,
-    uiComponents: true,
-    streamingLogic: true,
-    apiLayer: true,
-    deployment: true,
-    agentOrchestration: true,
-    llmInfra: true,
-    storage: true,
-    aiSdkCore: true
+    frontend: false,
+    uiComponents: false,
+    streamingLogic: false,
+    apiLayer: false,
+    deployment: false,
+    agentOrchestration: false,
+    llmInfra: false,
+    storage: false,
+    aiSdkCore: false
   });
 
   type CategoryKey = keyof typeof expandedCategories;

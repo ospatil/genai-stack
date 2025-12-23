@@ -242,9 +242,9 @@ const GenAiStack = () => {
         },
         {
           name: 'Bedrock Knowledge Bases (RAG)',
-          pros: ['Fully managed RAG', 'Auto chunking/embedding', 'S3 Vectors integration'],
+          pros: ['Fully managed RAG', 'Auto chunking/embedding', 'S3 Vectors integration', 'Amazon Kendra GenAI index integration'],
           cons: ['Less control over retrieval'],
-          when: 'Standard RAG needs'
+          when: 'Standard RAG needs, sophisticated search with Kendra'
         },
         {
           name: 'Direct Provider APIs',
@@ -367,7 +367,7 @@ const GenAiStack = () => {
     },
     {
       title: 'Bedrock Knowledge Bases',
-      description: 'Fully managed RAG (Retrieval Augmented Generation) service that automatically chunks documents, creates embeddings, stores them in vector databases, and retrieves relevant context for queries. Connects to S3, handles the entire RAG pipeline without code.',
+      description: 'Fully managed RAG (Retrieval Augmented Generation) service that automatically chunks documents, creates embeddings, stores them in vector databases, and retrieves relevant context for queries. Connects to S3, handles the entire RAG pipeline without code. Can build knowledge bases from Amazon Kendra GenAI indexes to create more sophisticated and accurate RAG-powered digital assistants with advanced search capabilities.',
       alternatives: [
         'LlamaIndex - Open-source RAG framework (Python/TypeScript)',
         'LangChain Document Loaders + Vector Stores - DIY RAG pipeline',
